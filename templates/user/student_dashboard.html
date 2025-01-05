@@ -1,0 +1,103 @@
+{%  extends "base.html" %}
+{% block title %}
+Aufgabenmanager
+{% endblock %}
+
+{% block navbar %}
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand"  href="{{url_for('app.home')}}">Aufgabenmanager</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{url_for('app.home')}}">Aufgaben</a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+                <a class="nav-link" href="{{ url_for('app.logout') }}">Ausloggen</a>
+            </span>
+          </div>
+        </div>
+      </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            <h2>Verfügbare Aufgaben(Listen)</h2>
+            {% if tasks_to_select %}
+            <ul class="list-group">
+            {% for task in tasks_to_select %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"> Titel: {{task.title}}</div>
+                        Beschreibung: {{task.description}}
+                        <small>Due Date: {{task.due_date}}</small>
+                      </div>
+                      <span class="badge"><form action="{{ url_for('app.assign_task', task_id=task.id) }}" method="post">
+                        <button class="btn btn-primary" type="submit">An dieser Aufgabe(Liste) arbeiten</button>
+                    </form></span>
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h4>No task </h4>
+            {% endif %}
+        </div>
+        <hr>
+        <br>
+        <div>
+        <h3>Aufgabe(Liste) in bearbeitung:</h3>
+        <hr>
+        <div class="container-fluid">
+            <ul>
+            {% for task in tasks %}
+                <li>
+                    <div>
+                        <h4>Titel der Aufgabe(Liste: {{task.task.title}}</h4>
+                        <h6>Due Date: {{task.task.due_date.strftime('%Y-%m-%d')}}</h6>
+                        <h6>Beschreibung: {{task.task.description}}</h6>
+                        <hr>
+                        <div><form action="{{ url_for('app.unclaim_task', task_id=task.task.id) }}" method="post">
+                            <button class="btn btn-danger" type="submit">Nicht mehr an Aufgabe(Liste) arbeiten</button>
+                        </form></div>
+                        <hr>
+                        <div>
+                            <h6>Aufgabenpunkte</h6>
+                            <div>
+                                <h6>Aufgabenpunkt hinzufügen</h6>
+                                <form action="{{url_for('app.add_task_point',task_id=task.task.id)}}" method="post">
+                                    <div>
+                                        <label for="text">Title:</label>
+                                        <input type="text" id="text" name="text" required>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">hinzufügen</button>
+                                </form>
+                            </div>
+                            <ul>
+                                <ul>
+                                    {% for points in task.task_list%}
+                                    <li><div>
+                                        <h4>{{points.text}}</h4>
+                                        <form action="{{url_for('app.delete_task_point', task_point_id=points.id)}}" method="post">
+                                            <button class="btn btn-danger"type="submit">Aufgabenpunk löschen</button>
+                                        </form> 
+                                        </div></li>
+                                    {% endfor %}
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        </div>
+    </div>
+    
+{% endblock %}
+    
