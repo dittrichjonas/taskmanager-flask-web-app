@@ -1,0 +1,43 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Aufgaben Übersicht
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+    <a href="{{ url_for('app.admin_task_add') }}">Neue Aufgabe(Liste) hinzufügen</a>
+
+    {% if tasks %}
+        <div class="container">
+            {% for task in tasks %}
+                <!-- <li>
+                    <h2><a href="{{url_for('app.admin_task_view',task_id=task.id)}}">{{ task.title }}</a></h2>
+                    <p>{{ task.description }}</p>
+                    <p>Due by: {{ task.due_date }}</p>
+                    <a href="{{ url_for('app.admin_task_edit', task_id=task.id) }}">Edit</a>
+                    <form action="{{ url_for('app.admin_task_delete', task_id=task.id) }}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li> -->
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><a class="card-link" href="{{url_for('app.admin_task_view',task_id=task.id)}}">{{ task.title }}</a></h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary">Due Date: {{task.due_date.strftime('%Y-%m-%d')}}</h6>
+                      <p class="card-text">{{ task.description }}</p>
+                      <a href="{{ url_for('app.admin_task_edit', task_id=task.id) }}" class="card-link">Aufgabe(Liste) bearbeiten</a>
+                      <span><form action="{{ url_for('app.admin_task_delete', task_id=task.id) }}" method="post">
+                        <button class="btn btn-danger" type="submit">Aufgabe(Liste) löschen</button>
+                        </form></span>
+                    </div>
+                  </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Es ist keine Aufgabe(Liste) vorhanden, füge jetzt eine hinzu!</p>
+    {% endif %}
+
+   
+  </div>
+
+{% endblock %}

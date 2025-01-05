@@ -1,0 +1,23 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Nutzer Liste
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <h4>Liste der Nutzer</h4>
+        <p><a href="{{url_for('app.add_users')}}">Neuen Nutzer hinzufügen</a></p>
+        <ul class="list-group w-25 ">
+            {% for user in users %}
+            <li class="list-group-item">
+                Nutzername: {{user.username}} <a href="{{url_for('app.update_student_creds', id=user.id)}}">Nutzer bearbeiten</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <ul>
+        
+        </ul>
+    </div>
+
+{%endblock%}

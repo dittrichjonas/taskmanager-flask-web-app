@@ -1,0 +1,58 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Aufgabe Details
+{% endblock %}
+
+{% block content %}
+
+      <div class="container-fluid">
+        <h2>Titel: {{task.title}}</h2>
+        <p>Beschreibung: {{ task.description }}</p>
+        <hr>
+        <p>Due by: {{task.due_date.strftime('%Y-%m-%d')}}</p>
+        <hr>
+        <div>
+          <p>Zugewiesen zu Nutzer/n: </p>
+          <ul>
+            {%for user in task.users_assign%}
+              <li>{{user.username}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <hr>
+        <a class="btn btn-secondary" href="{{ url_for('app.admin_task_edit', task_id=task.id) }}">Aufgabe(Liste) bearbeiten</a>
+        <form action="{{ url_for('app.admin_task_delete', task_id=task.id) }}" method="post">
+            <button class="btn btn-danger" type="submit">Aufgabe(Liste) löschen</button>
+        </form>
+        <br>
+        <div>
+            <h5>Aufgabenpunkte</h5>
+            <hr>
+            <br>
+            <div>
+                <h6>Aufgabenpunkte hinzufügen:</h6>
+                <form action="{{url_for('app.admin_task_point_add',task_id=task.id)}}" method="post">
+                    <div>
+                        <label for="text">Aufgabe:</label>
+                        <input type="text" id="text" name="text" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Jetzt hinzufügen</button>
+                </form>
+            </div>
+            <ul>
+                <ul>
+                    {% for points in task_points%}
+                    <li><div>
+                        <h4>{{points.text}}</h4>
+                        <form action="{{url_for('app.admin_task_point_delete', task_id=task.id, task_point_id=points.id)}}" method="post">
+                            <button  class="btn btn-primary" type="submit">Aufgabenpunkt löschen</button>
+                        </form> 
+                        </div></li>
+                    {% endfor %}
+                </ul>
+            </ul>
+        </div>
+        
+        </div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Aufgabe bearbeiten
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="{{ url_for('app.admin_task_edit', task_id=task.id) }}" method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label">Titel:</label>
+                <input type="text" class="form-label" id="title" name="title" value="{{ task.title }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Beschreibung:</label>
+                <textarea id="description" class="form-label" name="description" required>{{ task.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="due_date" class="form-label" >Due Date:</label>
+                <input type="date" id="due_date"  class="form-label" name="due_date" value="{{task.due_date.strftime('%Y-%m-%d')}}" required>
+            </div>
+            <button  class="btn btn-primary" type="submit">Aufgabe bearbeiten</button>
+        </form>
+    </div>
+{%endblock%}

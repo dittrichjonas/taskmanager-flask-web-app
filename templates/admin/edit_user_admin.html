@@ -1,0 +1,23 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Admin hinzufügen
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Admin hinzufügen</h1>
+        <form action="{{ url_for('app.admin_update_self') }}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nutzername:</label>
+                <input type="text" id="username" name="username" value="{{username}}" class="form-control">
+            </div>
+            <div class="mb-3" >
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-label">
+            </div>
+            <button class="btn btn-primary" type="submit">Admin erstellen</button>
+        </form>
+    </div>
+
+{%endblock%}

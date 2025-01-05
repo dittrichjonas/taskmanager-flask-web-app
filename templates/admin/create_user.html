@@ -1,0 +1,29 @@
+{% extends "base_admin.html" %}
+{% block title %}
+Nutzer hinzufügen
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+
+   
+    <a href="{{url_for('app.admin_user_dashboard')}}">Zurück zur Nutzerliste</a>
+    <div class="container">
+        <h4>Neuer Nutzer</h4>
+        
+        <form action="{{ url_for('app.add_users') }}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nutzername:</label>
+                <input type="text" id="username" name="username" required class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button class="btn btn-primary"type="submit">Hinzufügen</button>
+        </form>
+    </div>
+    </div>
+
+{%endblock%}
