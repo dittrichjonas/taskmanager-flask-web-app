@@ -20,7 +20,7 @@ Das Passwort ist immer user
 
 flask --app taskmanager run --debug
 
-Die Anwendung Aufgabenplaner ist dann im Browser unter der URL http://127.0.0.1:5000/ erreichbar
+Die Anwendung Aufgabenplaner ist dann im Browser unter der URL  erreichbar
 
 
 
